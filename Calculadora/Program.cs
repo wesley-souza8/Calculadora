@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Calculadora
 {
@@ -17,15 +18,39 @@ namespace Calculadora
 
             Calculadora calculadora = new Calculadora();
 
-            
-            while (filaOperacoes.Count >= 0)
+            // Usando Stack para armazenar os resultados
+            Stack<decimal> resultados = new Stack<decimal>();
+
+            // Colcando uma apresentação inicial
+            Console.WriteLine("Case Calculadora - Wesley Souza de Oliveira\n");
+            Console.WriteLine("Bem vinda(o) a Calculadora\n");
+
+            // Ajuste no loop para sair do valor inicial
+            while (filaOperacoes.Count > 0)
             {
-                Operacoes operacao = filaOperacoes.Peek();
+                // Ajuste no loop para sair do valor inicial
+                Operacoes operacao = filaOperacoes.Dequeue();
                 calculadora.calcular(operacao);
-                Console.WriteLine("{0} {1} {2} = {3}", operacao.valorA,operacao.operador,operacao.valorB, operacao.resultado);
+                Console.WriteLine("Calculando:\n{0} {1} {2} = {3}\n", operacao.valorA, operacao.operador, operacao.valorB, operacao.resultado);
+
+                // Armazenando o resultado na pilha
+                resultados.Push(operacao.resultado);
+
+                // Imprimindo os próximos na fila
+                Console.WriteLine("Próximos na fila:");
+                foreach (Operacoes op in filaOperacoes)
+                {
+                    Console.WriteLine("{0} {1} {2}", op.valorA, op.operador, op.valorB);
+                }
+                Console.WriteLine();
             }
 
-          
+            // Imprimindo todos os resultados calculados na ordem que foi calculado
+            Console.WriteLine("Todos os resultados calculado:");
+            foreach (decimal i in resultados.Reverse())
+            {
+                Console.WriteLine(i);
+            }          
            
         }
     }
